@@ -1,0 +1,67 @@
+CREATE DATABASE IF NOT EXISTS LMSs;
+
+USE LMSs;
+
+CREATE TABLE IF NOT EXISTS EMPLOYEE (
+    E_ID VARCHAR(5),
+    E_Name VARCHAR(50),
+    E_Username VARCHAR(50),
+    E_Password VARCHAR(50),
+    PRIMARY KEY (E_ID)
+);
+
+CREATE TABLE IF NOT EXISTS ROOMS (
+    ROOM_NO INT(10),
+    ROOM_TYPE VARCHAR(255),
+    ROOM_STATUS VARCHAR(255),
+    PRIMARY KEY (ROOM_NO)
+);
+
+CREATE TABLE IF NOT EXISTS CUSTOMER (
+    C_ID VARCHAR(5),
+    C_Name VARCHAR(50),
+    C_Username VARCHAR(50),
+    C_Password VARCHAR(50),
+    PRIMARY KEY (C_ID)
+);
+
+CREATE TABLE IF NOT EXISTS HOTEL_MANAGEMENT (
+    Name VARCHAR(50),
+    Phone_number INT(15),
+    Adhar_no INT(12),
+    Number_of_people INT(10),
+    Checkin_Date VARCHAR(20),
+    Checkout_Date VARCHAR(20),
+    Room_Number INT(5),
+    Total_Cost INT(10),
+    Mode_of_Payment VARCHAR(20),
+    Payment_Status VARCHAR(20),
+    E_ID VARCHAR(5),
+    C_ID VARCHAR(5), /* New column for Customer ID */
+    PRIMARY KEY (Room_Number),
+    FOREIGN KEY (Room_Number) REFERENCES ROOMS(ROOM_NO),
+    FOREIGN KEY (E_ID) REFERENCES EMPLOYEE(E_ID),
+    FOREIGN KEY (C_ID) REFERENCES CUSTOMER(C_ID) /* Establishing Relationship */
+) ENGINE=InnoDB; /* Specify Engine for table */
+
+CREATE TABLE IF NOT EXISTS SERVICES (
+    Service_ID INT(10),
+    Service_Name VARCHAR(255),
+    Service_Price INT(10),
+    Room_Number INT(5),
+    PRIMARY KEY (Service_ID),
+    FOREIGN KEY (Room_Number) REFERENCES ROOMS(ROOM_NO)
+) ENGINE=InnoDB; /* Specify Engine for table */
+
+
+INSERT INTO ROOMS(ROOM_NO, ROOM_TYPE, ROOM_STATUS)
+VALUES ('101', 'NON AC', 'UNOCCUPIED'),
+       ('102', 'NON AC', 'UNOCCUPIED'),
+       ('103', 'NON AC', 'UNOCCUPIED'),
+       ('104', 'AC', 'UNOCCUPIED'),
+       ('105', 'AC', 'UNOCCUPIED'),
+       ('106', 'AC', 'UNOCCUPIED'),
+       ('107', 'DELUXE', 'UNOCCUPIED'),
+       ('108', 'DELUXE', 'UNOCCUPIED'),
+       ('109', 'SUPER DELUXE', 'UNOCCUPIED'),
+       ('110', 'SUPER DELUXE', 'UNOCCUPIED');
